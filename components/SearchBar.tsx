@@ -22,7 +22,7 @@ const SearchBar = () => {
         updateSearchParams(model.toLowerCase(), manufacturer.toLowerCase())
     }
 
-
+    // console.log((window.location.search), 'window')
 
     // URL?make=volkswagen&tiguan
     const updateSearchParams = (model: string, manufacturer: string) => {

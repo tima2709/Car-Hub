@@ -24,11 +24,18 @@ export async function fetchCars(filters: FilterProps) {
         'X-RapidAPI-Key': 'ef3f37c17cmshe57da9186a02295p1887eajsn66a08d1e8107',
         'X-RapidAPI-Host': 'cars-by-api-ninjas.p.rapidapi.com'
     }
-    const response = await fetch (`https://cars-by-api-ninjas.p.rapidapi.com/v1/cars?make=${manufacturer}&year=${year}$model=${model}&limit=${limit}&fuel_type=${fuel}`, {
+
+    let api = `https://cars-by-api-ninjas.p.rapidapi.com/v1/cars?`
+
+    if (year) api += `year=${year}`
+    if (manufacturer) api += `&make=${manufacturer}`
+    if (model) api += `&model=${model}`
+    if (limit) api += `&limit=${limit}`
+    if (fuel) api += `&fuel_type=${fuel}`
+
+    const response = await fetch (api, {
         headers: headers,
     });
-
-    console.log(response, 'res')
 
     const result = await response.json();
 
@@ -36,9 +43,9 @@ export async function fetchCars(filters: FilterProps) {
 }
 
 export const calculateCarRent = (city_mpg: number, year: number) => {
-    const basePricePerDay = 50; // Base rental price per day in dollars
-    const mileageFactor = 0.1; // Additional rate per mile driven
-    const ageFactor = 0.05; // Additional rate per year of vehicle age
+    const basePricePerDay = 50;
+    const mileageFactor = 0.1;
+    const ageFactor = 0.05;
 
     // Calculate additional rate based on mileage and age
     const mileageRate = city_mpg * mileageFactor;
